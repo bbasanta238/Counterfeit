@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Test QR</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/core-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/sha256.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/enc-base64.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/pbkdf2.js"></script>
+
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="icon" href="./demo.png" />
+  </head>
+
+  <title>QRImage</title>
+  <body>
+    <div style="width: 50%; margin: 0 auto">
+      <div class="center">
+        <h1>QRImage</h1>
+      </div>
+      <div>
+        <label for="encryinput">Encrypted input</label>
+        <input type="text" name="encryinput" />
+        <button onclick="submitencryinput()">Submit</button>
+      </div>
+      <div class="center">
+        <h3>QRImage is a web app to generate QR codes with images.</h3>
+      </div>
+
+      <div class="center"></div>
+
+      <br />
+
+      <label>Image File (optional):</label>
+      <input type="file" id="imageLoader" name="imageLoader" />
+      <p>
+        Works better for square images (use an
+        <a href="https://www.online-image-editor.com/">editor</a> as needed).
+      </p>
+
+      <div class="center">
+        <canvas id="imageCanvas"></canvas>
+      </div>
+
+      <label>URL*:</label>
+      <input class="w3-input" id="text" type="text" />
+
+      <br />
+
+      <!-- <p>Bit size: <span id="printSize"></span></p> -->
+
+      <div class="tooltip">
+        Bit size:
+        <span class="tooltiptext"
+          >Larger sizes hide more of the image, but are easier to scan. I found
+          that a size of 30 works well.</span
+        >
+        <span id="printSize"></span>
+      </div>
+
+      <br /><br />
+
+      <div class="slidecontainer">
+        <input
+          type="range"
+          min="10"
+          max="100"
+          value="30"
+          class="slider"
+          id="radiusSize"
+        />
+      </div>
+
+      <br />
+
+      <div class="tooltip">
+        Error Correction:
+        <span class="tooltiptext"
+          >Higher level of error correction makes bigger qr codes, but also
+          allows you to hide more of the QR code. The former is more relevant to
+          this app.</span
+        >
+        <span id="printCorrection"></span>
+      </div>
+
+      <br /><br />
+
+      <div class="slidecontainer">
+        <input
+          type="range"
+          min="1"
+          max="3"
+          value="3"
+          class="slider"
+          id="errorCorrection"
+        />
+      </div>
+
+      <br />
+
+      <div class="tooltip">
+        Border Size:
+        <span class="tooltiptext"
+          >Size of white border around QR code. Typically need some border
+          around the code, but depending on your use case you can get rid of
+          it.</span
+        >
+        <span id="printBorderSize"></span>
+      </div>
+
+      <br /><br />
+
+      <div class="slidecontainer">
+        <input
+          type="range"
+          min="0"
+          max="5"
+          value="0"
+          class="slider"
+          id="borderSize"
+        />
+      </div>
+
+      <br />
+
+      <input type="checkbox" id="whitebackground" name="whitebackground" />
+      <label for="whitebackground">White background</label><br />
+
+      <br />
+
+      <div class="center">
+        <button
+          class="w3-button w3-white w3-border w3-border-blue"
+          style="margin: 0 auto"
+          onclick="makeCode()"
+        >
+          Generate QR code
+        </button>
+      </div>
+
+      <br />
+
+      <div class="center">
+        <canvas id="myCanvas"></canvas>
+      </div>
+
+      <br />
+
+      <div class="center">
+        <button
+          class="w3-button w3-white w3-border w3-border-blue"
+          style="margin: 0 auto"
+          onclick="download()"
+        >
+          Download PNG
+        </button>
+      </div>
+
+      <br />
+    </div>
+
+    <a id="link"></a>
+    <div id="qrcode" style="display: none"></div>
+    <script src="qrcode.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>

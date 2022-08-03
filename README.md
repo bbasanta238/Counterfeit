@@ -1,12 +1,21 @@
-# Counterfeit-Product-Detection-Using-Blockchain
-This is the project done to detect whether the offered product is genuine or not.
+# QRImage
 
-NOTE:
+<p align="center">
+    QRImage is a web app to generate QR codes with images.
+</p>
 
-This project is onprocess;
+<p align="center">
+    <img src="images/demo.png">
+</p>
 
-let me know if anyof you have any idea regarding this sort of project:---
+### Usage
 
-Email: vhandaribasanta@gmail.com
-    
-infi has joined
+1. Open [site](https://hughchen.github.io/qr_image/).
+2. Upload an image.
+3. Enter the URL.
+4. Adjust parameters.
+5. Download `PNG`.
+
+## Dependency
+
+* [davidshimjs / qrcode](https://github.com/davidshimjs/qrcodejs)

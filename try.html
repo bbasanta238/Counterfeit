@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Qr try</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/core-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/sha256.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/enc-base64.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/pbkdf2.js"></script>
+
+    <script>
+      // Code goes here
+      var keySize = 256;
+      var ivSize = 128;
+      var iterations = 100;
+
+      var message = "Hello World";
+      var password = "Secret Password";
+
+      function encrypt(msg, pass) {
+        var salt = CryptoJS.lib.WordArray.random(128 / 8);
+
+        var key = CryptoJS.PBKDF2(pass, salt, {
+          keySize: keySize / 32,
+          iterations: iterations,
+        });
+
+        var iv = CryptoJS.lib.WordArray.random(ivSize / 8);
+
+        var encrypted = CryptoJS.AES.encrypt(msg, key, {
+          iv: iv,
+          padding: CryptoJS.pad.Pkcs7,
+          mode: CryptoJS.mode.CBC,
+          hasher: CryptoJS.algo.SHA256,
+        });
+
+        // salt, iv will be hex 32 in length
+        // append them to the ciphertext for use  in decryption
+        var transitmessage =
+          salt.toString() + iv.toString() + encrypted.toString();
+        console.log("before transit");
+        console.log(transitmessage);
+        return transitmessage;
+      }
+
+      function decrypt(transitmessage, pass) {
+        var salt = CryptoJS.enc.Hex.parse(transitmessage.substr(0, 32));
+        var iv = CryptoJS.enc.Hex.parse(transitmessage.substr(32, 32));
+        var encrypted = transitmessage.substring(64);
+
+        var key = CryptoJS.PBKDF2(pass, salt, {
+          keySize: keySize / 32,
+          iterations: iterations,
+        });
+
+        var decrypted = CryptoJS.AES.decrypt(encrypted, key, {
+          iv: iv,
+          padding: CryptoJS.pad.Pkcs7,
+          mode: CryptoJS.mode.CBC,
+          hasher: CryptoJS.algo.SHA256,
+        });
+        return decrypted;
+      }
+
+      var encrypted = encrypt(message, password);
+      var decrypted = decrypt(encrypted, password);
+
+      console.log("Encrypted: " + encrypted);
+      console.log("Decrypted: " + decrypted.toString(CryptoJS.enc.Utf8));
+    </script>
+  </head>
+  <body>
+    <h1>Ty</h1>
+  </body>
+</html>
