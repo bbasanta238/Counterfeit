@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-    <img src="images/demo.png">
+  
 </p>
 
 ### Usage
