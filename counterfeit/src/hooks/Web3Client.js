@@ -1,5 +1,5 @@
 import Web3 from "web3";
-import { useState, useEffect } from "react";
+import React,{ useState, useEffect } from "react";
 
 const useWeb3 = (setIsLoading, setErrorMessage) => {
 	//web3 provider instance
@@ -34,6 +34,7 @@ const useWeb3 = (setIsLoading, setErrorMessage) => {
 
 			//connect metamask to web3.js and get a web3 provider instance
 			const web3 = new Web3(metamaskInject); //instant of web3
+			setProvider(web3);
 			const accounts = await web3.eth.getAccounts();
 			setAccount(accounts[0]);
 			setProvider(web3);
