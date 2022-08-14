@@ -9,8 +9,8 @@ contract Brand{
     }
 
     // brands[address] will have the details of that brand
-    mapping(address => Company) public brands;
-
+    mapping(address => Company) public brands; //brands[address] ==>value brands[1] == company///brand[add].brandname ==>
+    
     // checking brand exists or not
     mapping(string => bool) private exists;
 
@@ -26,7 +26,12 @@ contract Brand{
     //event for removing brand
     event BrandDeleted(address _owner, string _brandName);
 
-
+    // checked if brand is registered or not --called from _Product.sol
+    modifier checkBrandValidation(address _owner){
+          bytes memory tempName = bytes(brands[_owner].brandName);
+          require(tempName.length > 0 , 'Brand is not valid'); 
+          _;
+    }
     //modifier to check brandname alredy exits or not
     modifier checkBrandName(string memory _brandName){
         require(exists[_brandName]==false,'Brand Name Already Exits');
@@ -57,7 +62,7 @@ contract Brand{
 
     //delete brand
     // _brandOwner is passed from report.sol checking number of reports
-    function deleteBrand(address _brandOwner) public {
+    function deleteBrand(address _brandOwner) internal {
         delete exists[brands[_brandOwner].brandName];
         emit BrandDeleted(_brandOwner,brands[_brandOwner].brandName);
 

@@ -1,16 +1,30 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import logo from "../images/_logo.png";
-
+import axios from "axios";
+// import { Web3Storage } from "web3.storage/dist/srcbundle.esm.min.js";
 import { PhotographIcon } from "@heroicons/react/solid";
+
+// const token = process.env.REACT_APP_WEB3_API_TOKEN;
+// const client = new Web3Storage({ token });
 
 function BrandCreate(props) {
 	const [name, setName] = useState("");
 
 	// formhooks
 	const { register, handleSubmit } = useForm();
-	const onSubmit = (data) => {
+	const onSubmit = async (data) => {
 		console.log(data);
+		// console.log(data[0]);
+		console.log("geredfdfdfr" + data.brandLogoImage[0].name);
+		console.log("gerer" + data.brandLogoImage[0]);
+
+		const formData = new FormData();
+		formData.append("file", data.brandLogoImage[0]);
+		console.log(Array.from(formData));
+		// console.log((data.brandlogo)[0])
+		// const cid = await client.put(formData);
+		// console.log("stored files with cid:", cid);
 	};
 	// end form hook
 	function toggleNav() {
@@ -78,15 +92,21 @@ function BrandCreate(props) {
 							Create Your Own Brand
 						</p>
 						<div className="mx-auto my-4 py-2">
-							<p className="text-2xl md:text-2xl text-blue-700  my-1 md:my-2 ">Terms:</p>
+							<p className="text-2xl md:text-2xl text-blue-700  my-1 md:my-2 ">
+								Terms:
+							</p>
 							<p className="md:text-xl text-purple-600">
 								- Brand Name Must Be Unique
 							</p>
-							<p className="md:text-xl text-purple-600">- One Account-One Brand</p>
+							<p className="md:text-xl text-purple-600">
+								- One Account-One Brand
+							</p>
 						</div>
 
 						<div className="relative py-1 md:py-3 sm:max-w-xl mx-auto text-center w-full md:w-3/5">
-							<span className="text-2xl md:font-3xl text-gray-500 font-semibold">Register Brand</span>
+							<span className="text-2xl md:font-3xl text-gray-500 font-semibold">
+								Register Brand
+							</span>
 							<div className="relative mt-4 bg-white shadow-md sm:rounded-lg text-left">
 								<div className="h-2 bg-indigo-400 rounded-t-md"></div>
 								<form className="py-6 px-8" onSubmit={handleSubmit(onSubmit)}>
@@ -113,9 +133,11 @@ function BrandCreate(props) {
 										>
 											Select files
 											<input
-												{...register("brandLogo", { required: "Required" })}
+												{...register("brandLogoImage", {
+													required: "Required",
+												})}
 												type="file"
-												name="brandLogo"
+												name="brandLogoImage"
 												id="brandLogo"
 												className="sr-only"
 											/>

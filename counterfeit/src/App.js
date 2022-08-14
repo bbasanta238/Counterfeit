@@ -8,6 +8,8 @@ import AboutComp from "./components/AboutComp";
 import brandContract from "./contractConnect";
 import BrandCreate from "./components/BrandCreate";
 import Burger from "./components/Burger";
+
+import ipfs_upload from "./client/api/ipfs_upload";
 // import UseWeb3 from "./hooks/Web3Client";
 function App() {
 	const [toggle, setToggle] = useState(false);
@@ -62,6 +64,8 @@ function App() {
 						}
 						onClick={onRouteCLick}
 					/>
+
+					{/* <Route exact path="client/api/ipfs_upload/" element={<ipfs_upload/>} /> */}
 				</Routes>
 				{/* <button className="btn btn-secondary" onClick={brandContract}>
 					Connect to smartContract

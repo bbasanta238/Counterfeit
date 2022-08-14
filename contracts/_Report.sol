@@ -5,14 +5,14 @@ import './_Brand.sol';
 
 //inherting brand in contract reprot
 //Brand --> parent, report --> child
-contract report is Brand {
+contract Report is Brand {
     struct ReportData {
         uint256 products;//number of products that user have
         bool hasReported; //user has reported this brand or not
     }
 
 // mapping of products with user and of which brand
-    mapping(address =>mapping(address=>ReportData)) public userRepoInfo;
+    mapping(address =>mapping(address=>ReportData)) public userRepoInfo;   // [user][brand] =>details
 
 // event to report a brand
     event brandReported(address _brandOwner, address _reporter);
